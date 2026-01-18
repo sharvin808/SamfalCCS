@@ -1,0 +1,583 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samfal</title>
+
+<style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial;}
+    body{
+        background:#FFF1E0;
+        color:#2B2B2B;
+        line-height:1.65;
+    }
+
+    /* NAVBAR */
+    header{
+        background:#5C3A26;
+        padding:16px 60px;
+        color:white;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        position:sticky;
+        top:0;
+        z-index:999;
+        box-shadow:0 3px 10px rgba(0,0,0,0.18);
+    }
+    header img{
+        height:52px; 
+        margin-right:10px;
+    }
+    .logo-img{
+        height:52px;
+        width:auto;
+        object-fit:contain;
+    }
+    .brand{
+        display:flex;align-items:center;
+        font-size:24px;font-weight:800;
+        letter-spacing:0.5px;
+    }
+    nav a{
+        color:white;text-decoration:none;margin:0 12px;
+        font-size:16px;font-weight:600;
+        transition:0.3s;
+    }
+    nav a:hover{opacity:0.75;}
+
+    /* HERO */
+    .hero{
+        height:75vh;
+        background:url("{% static 'images/Children3.jpg' %}") center/cover no-repeat;
+        display:flex;justify-content:center;align-items:center;text-align:center;
+        position:relative;color:white;
+    }
+    .hero::after{
+        content:"";position:absolute;top:0;left:0;width:100%;height:100%;
+        background:rgba(92,58,38,0.55); /* brown overlay */
+    }
+    .hero h1{
+        position:relative;z-index:2;font-size:48px;font-weight:800;
+        max-width:1000px;padding:0 20px;
+        text-shadow:0 3px 10px rgba(0,0,0,0.4);
+    }
+
+    /* SECTIONS */
+    section{
+        padding:80px 100px;
+    }
+
+    /* UPDATED ALTERNATING BACKGROUNDS */
+    section:nth-of-type(odd){background:#F4EAC2;} 
+    section:nth-of-type(even){background:#E9DEBE;}
+
+    section h2{
+        font-size:32px;font-weight:800;
+        color:#5C3A26;
+        margin-bottom:20px;
+        letter-spacing:0.5px;
+        border-left:6px solid #FF665A;
+        padding-left:12px;
+    }
+
+    section p, section li{
+        font-size:18px;
+        max-width:1100px;
+        margin-bottom:10px;
+    }
+
+    .image-mid{
+        width:100%;
+        height:360px;
+        margin:40px 0;
+        border-radius:12px;
+        background:url("{% static 'images/Children2.jpg' %}") center/cover no-repeat;
+        box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* TEAM */
+    .team-container{
+        display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+        gap:32px;margin-top:40px;
+    }
+    .member-card{
+        background:white;
+        padding:24px;text-align:center;border-radius:12px;
+        border:2px solid #E9DEBE;
+        transition:0.35s;
+        box-shadow:0 3px 8px rgba(0,0,0,0.12);
+    }
+    .member-card:hover{
+        transform:translateY(-6px);
+        box-shadow:0 6px 12px rgba(0,0,0,0.2);
+    }
+    .member-img{
+        width:120px;
+        height:120px;
+        border-radius:50%;
+        object-fit:cover;
+        border:4px solid #5C3A26;
+        margin-bottom:12px;
+    }
+    .member-card h3{font-size:20px;font-weight:700;color:#5C3A26;margin-bottom:4px;}
+    .member-card p{font-size:16px;color:#FF665A;font-weight:600;}
+
+    /* DONATE CTA */
+    .donate-box{
+        padding:80px 100px;
+        text-align:center;
+        background:#FF665A;
+        color:white;
+    }
+    .donate-box h2{color:white;}
+    .donate-box p{font-size:20px;margin-bottom:22px;}
+    .donate-btn{
+        background:white;color:#FF665A;
+        padding:15px 36px;font-size:20px;font-weight:700;
+        border-radius:8px;text-decoration:none;
+        transition:0.3s;border:2px solid transparent;
+    }
+    .donate-btn:hover{
+        background:transparent;border-color:white;color:white;
+    }
+
+    /* CONTACT */
+    .contact-box{
+        max-width:700px;margin-top:28px;display:flex;flex-direction:column;gap:14px;
+    }
+    input,textarea{
+        padding:12px;font-size:17px;border-radius:8px;
+        border:2px solid #E9CFC9;background:white;
+        outline:none;transition:0.25s;
+    }
+    input:focus,textarea:focus{
+        border-color:#5C3A26;box-shadow:0 0 8px rgba(92,58,38,0.4);
+    }
+    button{
+        padding:14px;background:#5C3A26;color:white;border:none;
+        font-size:18px;border-radius:8px;cursor:pointer;font-weight:700;
+        transition:0.3s;
+    }
+    button:hover{background:#3E281B;} /* darker coffee */
+
+    /* FOOTER */
+    footer{
+        background:#2B2B2B;color:white;text-align:center;
+        padding:24px;font-size:15px;
+    }
+
+    @media(max-width:768px){
+        section,.donate-box{padding:50px 24px;}
+        header{padding:12px 24px;}
+        .hero h1{font-size:30px;}
+    }
+</style>
+
+</head>
+<body>
+
+<header>
+    <div class="brand">
+        <img src="{% static 'images/logo.jpeg' %}" class="logo-img" alt="Logo">
+        SAMFAL
+    </div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#vision">Vision</a>
+        <a href="#programs">Programs</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+        <a href="#donate">Donate</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <h1>Value.Care.Protection</h1>
+</div>
+
+<section id="about">
+    <h2>About Us</h2>
+    <p>
+        Our Story - How SAMFAL Child Care Society Began<br><br>
+
+SAMFAL Child Care Society was born from a simple but powerful realization: every child deserves safety, care, and a chance to dream, regardless of their background.
+
+The idea of SAMFAL began in 2024 when a small group of socially conscious individuals came together during a community outreach program in Thrissur. While interacting with children from underserved families, we witnessed firsthand the challenges many of them faced-lack of proper care, emotional support, safe spaces, and access to basic rights. What touched us most was not just their needs, but their resilience, hope, and dreams for the future.<br>
+
+    </p>
+    <div class="image-mid"></div>
+    <p>
+        During one such interaction, we met a child who confidently spoke about becoming a teacher one day, despite struggling with basic necessities. That moment became a turning point for us. It reminded us that potential exists everywhere, but opportunity does not.
+
+Motivated by these experiences, we decided to move beyond temporary support and create a structured, long-term initiative focused on child care and child rights. This shared vision led to the formation of SAMFAL Child Care Society.<br><br>
+
+The name SAMFAL holds special meaning for us. It is formed from the initials of the founding team members, symbolizing unity, collective responsibility, and shared purpose. In addition, the initial letters of three other core members 'V, C, and P' are also represented in our logo, reflecting inclusivity and the belief that every contributor plays an important role in our journey.<br><br>
+
+What began as a small, heartfelt initiative has grown into a committed effort to provide a safe, nurturing, and inclusive environment for children. At SAMFAL, we work to protect children’s rights, support their emotional and social development, and empower them to grow with dignity and confidence.<br><br>
+
+Our journey is guided by a single belief: when we invest in children today, we build a stronger and more compassionate society for tomorrow.
+
+    </p>
+</section>
+
+<section id="vision">
+    <h2>Vision & Mission</h2>
+    <p><strong>Vision:</strong><br>
+    To build a safe, child-friendly and empowering shelter where orphaned and vulnerable children grow with dignity, security, education and future-ready skills, enabling them to become emotionally strong, socially responsible and economically independent adults.</p>
+    <p><strong>Mission:</strong><br>
+      To provide holistic residential care, protection and rehabilitation for children placed under the Juvenile Justice (Care and Protection of Children) Act by ensuring safe shelter, quality education, healthcare, psychosocial support, child safeguarding, vocational and AI-based digital learning, life skills education, career guidance, institutional collaborations and structured aftercare support for successful transition into adulthood and community integration.</p>
+</section>
+
+<section>
+    <h2>Aim</h2>
+    <p>To ensure the safety, wellbeing, rehabilitation and overall development of orphaned and vulnerable children placed through CWC/DCPU under the JJ Act by providing child-friendly residential care, education, skill development, digital inclusion and long-term life support including reintegration and aftercare.</p>
+</section>
+
+<section>
+    <h2>Objectives</h2>
+    <ul>
+        <li> Safe Shelter and Child-Friendly Residential Care
+<br>* To provide a safe, secure and supportive residential environment for children admitted under the JJ Act.
+<br>* To ensure proper access to basic needs such as food, clothing, hygiene, healthcare and recreational activities.
+<br>* To create a structured routine and nurturing atmosphere promoting stability and dignity.</li>
+        <li>JJ Act Compliance and Protection-Based Services
+
+<br>* To function in accordance with JJ Act standards and coordinate with **CWC, DCPU, Childline and other child protection authorities**.
+<br>* To ensure legal compliance in admission, rehabilitation planning and follow-up.
+<br>* To maintain child rights-based institutional care services ensuring dignity, privacy and participation.</li>
+        <li>Child Safeguarding and Zero Tolerance Protection Policy
+
+<br>* To implement a strong child safeguarding policy with zero tolerance towards child abuse, neglect, exploitation or bullying.
+<br>* To ensure safe reporting mechanisms (complaints system/helpline support) for children.
+<br>* To train staff in child protection ethics, code of conduct and POCSO awareness.</li>
+        <li>Individual Care Plan (ICP) and Casework-Based Rehabilitation
+
+<br>* To develop **Individual Care Plans (ICP)** for each child based on their education, health, emotional needs and future goals.
+<br>* To provide professional social work casework support including counselling, follow-ups and periodic progress reviews.
+<br>* To maintain systematic case documentation and reports as per child welfare standards.</li>
+        <li> Psychosocial Support and Emotional Wellbeing
+
+<br>* To provide counselling, emotional support and trauma-informed care for children with difficult backgrounds.
+<br>* To support children in developing confidence, resilience, self-esteem and healthy relationships.
+<br>* To conduct group sessions and mentoring programs that promote peer support and emotional development.</li>
+        <li>Education Support and Academic Development
+
+<br>* To ensure admission and regular attendance in schools through proper educational support.
+<br>* To provide tuition, remedial coaching and learning assistance to bridge learning gaps.
+<br>* To encourage academic excellence and holistic growth through co-curricular activities.</li>
+        <li>Vocational Training and Employability Skill Development
+
+<br>* To provide vocational training programmes based on the child’s age, interest and ability.
+<br>* To support skill certification and practical training in employability areas.
+<br>* To build future livelihood capability and reduce dependency.</li>
+        <li>AI, Digital Inclusion and 21st Century Learning
+
+<br>* To provide digital literacy and technology exposure to bridge the digital divide.
+<br>* To introduce children to **AI inclusion learning** and modern computer-based skills.
+<br>* To promote safe and responsible use of technology through digital safety awareness.</li>
+        <li>Life Skills Education and Personality Development
+
+<br>* To conduct structured life skills training including communication, decision-making, leadership, emotional regulation, teamwork and confidence-building.
+<br>* To promote values, discipline, healthy habits and responsible citizenship.
+<br>* To enhance social competence and independence for future life.</li>
+        <li>Career Guidance, Higher Education and Collaboration Support
+
+<br>* To provide career guidance programmes, aptitude-based counselling and goal setting sessions.
+<br>* To collaborate with institutions, training centres, mentors and professionals to support higher education, internships and exposure visits.
+<br>* To provide guidance for scholarships, entrance exams and future planning.
+</li>
+<li>Eco-Friendly Product Making and Sustainable Livelihood Exposure
+
+<br>* To train children in creating eco-friendly and sustainable products as part of skill-building.
+<br>* To invite resource persons and experts for hands-on learning in different skill areas.
+<br>* To promote environmental responsibility and livelihood creativity among children.</li>
+<li>
+    Family Tracing, Reintegration and Restoration Support
+
+<br>* To support family tracing and restoration wherever possible and in the best interest of the child.
+<br>* To coordinate with authorities for reintegration, foster care or adoption linkages as per legal procedures.
+<br>* To ensure child’s long-term emotional security and social integration.
+</li>
+<li>
+    Aftercare and Transition Support (18+)
+
+<br>* To provide structured aftercare services for children after 18 years including education support, job placement, accommodation guidance and life coaching.
+<br>* To support independent living skills such as budgeting, banking, self-care, workplace behaviour and career stability.
+<br>* To create long-term mentorship and support for successful adult rehabilitation.
+</li>
+</ul>
+</section>
+
+<section>
+    <h2>Legal Status & Registration</h2>
+    <ul>
+        <li>Registered under the Societies Registration Act.</li>
+        <li>Functions in alignment with the Juvenile Justice (Care & Protection) Act, 2015.</li>
+        <li>Complies with child protection, safety, and welfare laws.</li>
+        <li>Financial operations audited annually as per legal standards.</li>
+    </ul>
+    <p>Registration Number:KER45632897</p>
+</section>
+
+<section>
+    <h2>Governance Structure</h2>
+    <p>SAMFAL operates through a transparent and accountable governance system ensuring child safety, development, and institutional compliance.
+Structure includes</p>
+    <p><strong>The governance system ensures:</strong></p>
+    <ul>
+        <li>Policy formation</li>
+        <li>Financial management</li>
+        <li>Program monitoring</li>
+        <li>JJ Act compliance</li>
+        <li>Child safeguarding</li>
+        <li>Strategic decision-making</li>
+    </ul>
+</section>
+
+<section>
+    <h2>General Body</h2>
+    <p><strong>Members of the General Body:</strong></p>
+    <ul>
+        <li>President – Fidha P</li>
+        <li>Vice President – Prince Joseph</li>
+        <li>General Secretary – Aleena Yesudas</li>
+        <li>Joint Secretary – Sona T P</li>
+        <li>Manager/Superintendent – Vivekanand Pradhan</li>
+        <li>Treasurer – Anjali Christy Jose</li>
+        <li>Executive Members:</li>
+        <ul>
+            <li>Chelsia S Thomas</li>
+            <li>Linux Joseph</li>
+            <li>Meenakshi P V</li>
+        </ul>
+    </ul><br><br>
+    <p><strong>Rights & Duties</strong></p>
+    <ul>
+        <li>Receive notices for all meetings.</li>
+        <li>Participate and vote in all decisions.</li>
+        <li>Approve amendments and bye-laws.</li>
+        <li>Appoint auditors.</li>
+        <li>Oversee welfare-oriented financial utilization.</li>
+        <li>Approve annual action plans for child care.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Governing Body</h2>
+    <p><strong>The Governing Body is responsible for:</strong></p>
+    <ul>
+        <li>Implementation of child protection standards</li>
+        <li>Policy decisions</li>
+        <li>Financial approvals</li>
+        <li>Recruitment and staff training</li>
+        <li>Program development and evaluation</li>
+        <li>Ensuring compliance with JJ Act, POCSO & other laws</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Child Protection & JJ Act Compliance</h2>
+    <p><strong>Child Safeguarding Policy</strong></p>
+    <ul>
+        <li>Zero tolerance for abuse, neglect, or exploitation.</li>
+        <li>Mandatory staff training in POCSO and child protection ethics</li>
+        <li>Child-friendly complaints and reporting mechanisms.</li>
+        <li>Privacy, dignity, and participation ensured.</li>
+    </ul>
+    <br>
+    <br>
+    <p><strong>JJ Act Compliance</strong></p>
+    <ul>
+        <li>Admissions only through CWC/DCPU.</li>
+        <li>Case files, ICPs, and documentation maintained.</li>
+        <li>Regular reviews and follow-ups in coordination with authorities.</li>
+    </ul>
+</section>
+
+<section id="programs">
+    <h2>Programs & Services</h2>
+    <p><strong>Residential Care</strong></p>
+    <ul>
+        <li>Safe accommodation</li>
+        <li>Nutritious meals</li>
+        <li>Hygiene and daily routines</li>
+    </ul><br>
+    <p><strong>Education Support</strong></p>
+    <ul>
+        <li>School admissions</li>
+        <li>Tuition, remedial classes</li>
+        <li>Academic monitoring</li>
+    </ul><br>
+    <p><strong>Psychosocial Care</strong></p>
+    <ul>
+        <li>Counselling</li>
+        <li>Peer support groups</li>
+        <li>Trauma-informed care</li>
+    </ul><br>
+    <p><strong>Health & Medical Support</strong></p>
+    <ul>
+        <li>Health check-ups</li>
+        <li>Emergency health care</li>
+        <li>Medical record maintenance</li>
+    </ul><br>
+    <p><strong>Skill Development</strong></p>
+    <ul>
+        <li>Vocational training</li>
+        <li>Practical workshops</li>
+        <li>Certification opportunities</li>
+    </ul><br>
+    <p><strong>AI & Digital Learning</strong></p>
+    <ul>
+        <li>Computer skills</li>
+        <li>AI-based learning tools</li>
+        <li>Digital safety education</li>
+    </ul><br>
+    <p><strong>Life Skills Training</strong></p>
+    <ul>
+        <li>Communication</li>
+        <li>Decision-making</li>
+        <li>Self-discipline</li>
+    </ul><br>
+    <p><strong>Career Guidance</strong></p>
+    <ul>
+        <li>Aptitude testing</li>
+        <li>Career planning</li>
+        <li>Higher education support</li>
+    </ul><br>
+    <p><strong>Family Reintegration</strong></p>
+    <ul>
+        <li>Counselling</li>
+        <li>Background verification</li>
+        <li>Follow-up support</li>
+    </ul><br>
+    <p><strong>Aftercare Support</strong></p>
+    <ul>
+        <li>Job placement</li>
+        <li>Accommodation guidance</li>
+        <li>Mentorship for independent living</li>
+    </ul><br>
+</section>
+
+<section>
+    <h2>Volunteer & Internship Opportunities</h2>
+    <p>Why Join SAMFAL?</p>
+    <p>Volunteers and interns play a vital role in shaping children's confidence, skills, and happiness.</p>
+    <br>
+    <p><strong>Opportunities Include:</strong></p>
+    <ul>
+        <li>Teaching & tutoring</li>
+        <li>Life skills workshops</li>
+        <li>Creative arts & sports</li>
+        <li>Counselling support</li>
+        <li>Digital literacy training</li>
+        <li>Documentation & research</li>
+    </ul><br>
+    <p><strong>Who Can Apply?</strong></p>
+    <ul>
+        <li>Students</li>
+        <li>Professionals</li>
+        <li>Social work trainees</li>
+        <li>Community volunteers</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Policies & Bye-law</h2>
+    <ul>
+        <li>Memorandum of Association</li>
+        <li>Bye-laws of the Society</li>
+        <li>Child Safeguarding Policy</li>
+        <li>Finance & Audit Policy</li>
+        <li>Administrative Guidelines</li>
+        <li>Staff Code of Conduct</li>
+    </ul><br>
+    <p><strong>Includes procedures for:</strong></p>
+    <ul>
+        <li>Amendments</li>
+        <li>Meetings</li>
+        <li>Legal compliance</li>
+        <li>Financial management</li>
+    </ul>
+</section>
+
+<section id="team">
+    <h2>Our Team</h2>
+    <div class="team-container">
+        <div class="member-card">
+            <img src="{% static 'images/fidha.png' %}" class="member-img" alt="">
+            <h3>Fidha P</h3><p>President</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/prince.jpeg' %}" class="member-img" alt="">
+            <h3>Prince Joseph</h3><p>Vice President</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/alina.jpeg' %}" class="member-img" alt="">
+            <h3>Aleena Yesudas</h3><p>General Secretary</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/sona.jpeg' %}" class="member-img" alt="">
+            <h3>Sona T P</h3><p>Joint Secretary</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/vivek.jpeg' %}" class="member-img" alt="">
+            <h3>Vivekanand Pradhan</h3><p>Manager/Superintendent</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/ANJALI.jpg' %}" class="member-img" alt="">
+            <h3>Anjali Christy Jose</h3><p>Treasurer</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/chelsia.jpeg' %}" class="member-img" alt="">
+            <h3>Chelsia S Thomas</h3><p>Executive Member</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/meenakshi.jpeg' %}" class="member-img" alt="">
+            <h3>Meenakshi P V</h3><p>Executive Member</p>
+        </div>
+        <div class="member-card">
+            <img src="{% static 'images/linux.jpeg' %}" class="member-img" alt="">
+            <h3>Linux Joseph</h3><p>Executive Member</p>
+        </div>
+    </div>
+</section>
+
+<div id="donate" class="donate-box">
+    <h2>Donate Now</h2>
+    <p>Your kindness can transform a child's future.</p>
+    <a href="#" class="donate-btn">Donate Now</a>
+</div>
+
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p>Feel free to reach out for collaboration, volunteering or queries.</p>
+    <div class="contact-box">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <textarea placeholder="Your Message"></textarea>
+        <button>Send Message</button>
+    </div>
+
+    <br><br>
+    <h3>Address</h3>
+    <p>
+        SAMFAL Child Care Society<br>
+        Grace Villa,<br>
+        Near Government Children’s Park,<br>
+        Ayyanthole P.O.,<br>
+        Thrissur – 680003,<br>
+        Kerala, India.<br>
+        Phone: +91 8182838485<br>
+        Email: samfalccs@gmail.com
+    </p>
+</section>
+
+<footer>
+    © 2026 Samfal CCS | All Rights Reserved
+</footer>
+
+</body>
+</html>
